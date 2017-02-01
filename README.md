@@ -9,4 +9,5 @@ MIT License.
 This app must use with power hardware.  
 see http://qiita.com/yakumo/items/ecf7686fc4eada4177f7 (Japanese language only)
 
+# Copyright
 Copyright 2017 Saki Yakumo.
