@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Jumbotron Template for Bootstrap</title>
+    <title>Power control</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -25,13 +25,36 @@
         <div class="col-md-12 col-sm-12">
 					<h3>サーバーステータス</h3>
 				</div>
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-6 col-sm-12">
           <h2>Hypervisor</h2>
-          <p>Hypervisor is <span id="hv_status">down</span></p>
+          <p>
+						Hypervisor is <span id="hv_status">down</span>
+
+						<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#hv_detail"
+										aria-expanded="false" aria-controls="hv_detail">
+							Detail
+						</button>
+					</p>
+
+					<div class="collapse" id="hv_detail">
+						<pre id="hv_output" class="well">
+						</pre>
+					</div>
         </div>
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-6 col-sm-12">
           <h2>Server</h2>
-          <p>Server is <span id="sv_status">down</span></p>
+          <p>
+						Server is <span id="sv_status">down</span>
+
+						<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#sv_detail"
+										aria-expanded="false" aria-controls="sv_detail">
+							Detail
+						</button>
+					</p>
+					<div class="collapse" id="sv_detail">
+						<pre id="sv_output" class="well">
+						</pre>
+					</div>
        </div>
       </div>
 
@@ -46,10 +69,6 @@
 				</div>
 			</div>
       <hr>
-
-      <footer>
-        <p>&copy; Company 2017</p>
-      </footer>
     </div> <!-- /container -->
 
 
@@ -58,6 +77,7 @@
     <script src="js/bootstrap.min.js"></script>
 
 		<script>
+			var json;
 			$(document).ready(function() {
 
 				$.ajax({
@@ -65,10 +85,23 @@
 					url: "ping.php",
 					dataType: "json"
 				}).then(function (data) {
-					alert(JSON.stringify(data));
-				});
+					console.log(data);
+					json = data;
+					$("#hv_status").text( (data.hv_ret == 0) ? "up" : "DOWN" );
+					$("#sv_status").text( (data.sv_ret == 0) ? "up" : "DOWN" );
 
+					$("#hv_output").text( arrayToString(data.hv_output) );
+					$("#sv_output").text( arrayToString(data.sv_output) );
+				});
 			});
+
+			function arrayToString(stringArray) {
+				var str = "";
+				stringArray.forEach(function (s) {
+					str += s + "\n";
+				});
+				return str;
+			}
 		</script>
   </body>
 </html>
