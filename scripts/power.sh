@@ -1,19 +1,23 @@
 #!/bin/bash
-GPIO_NO=17
-
+GPIO_NO=UNDEFINED
 SWITCH_SEC=UNDEFINED
 WAIT_GPIO=0.05
 
 if [ "$1" = "" ] ; then
-  echo Parameter needed. long or short
+  echo Parameter needed. GPIO# long or short
   exit 16
 fi
 
-if [ $1 = "long" ] ; then
+if [ "$2" = "" ] ; then
+  echo Parameter needed. GPIO# long or short
+  exit 16
+fi
+
+if [ $2 = "long" ] ; then
   SWITCH_SEC=10
 fi
 
-if [ $1 = "short" ] ; then
+if [ $2 = "short" ] ; then
   SWITCH_SEC=0.5
 fi
 
